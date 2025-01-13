@@ -126,7 +126,7 @@ while getopts "iushf" opt; do
                 read -p "Ingresa tu dirección IP (por ejemplo, 192.168.1.100): " IP
                 read -p "Ingresa tu gateway: " GATEWAY
 
-                cat << EOF > /etc/netplan/00-installer-config.yaml
+                cat << EOF > /etc/netplan/50-cloud-init.yaml
 network:
   version: 2
   renderer: networkd
