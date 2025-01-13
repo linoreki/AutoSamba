@@ -7,7 +7,7 @@ NC="\e[0m"
 
 # Función para mostrar ayuda
 function mostrar_ayuda() {
-    echo -e "${GREEN}Uso:${NC} sudo ./samba_setup.sh [opciones]\n"
+    echo -e "${GREEN}Uso:${NC} sudo ./AutoSamba.sh [opciones]\n"
     echo "Opciones:"
     echo "  -i        Instala y configura automáticamente el servidor Samba"
     echo "  -u        Administra usuarios del Directorio Activo"
