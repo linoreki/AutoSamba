@@ -128,15 +128,17 @@ while getopts "iushf" opt; do
 
                 cat << EOF > /etc/netplan/50-cloud-init.yaml
 network:
-  version: 2
-  renderer: networkd
-  ethernets:
-    $ADAPTADOR:
-      dhcp4: no
-      addresses: [$IP/24]
-      gateway4: $GATEWAY
-      nameservers:
-        addresses: [$NAMESERVER]
+    ethernets:
+      $ADAPTADOR_NUM:
+        addresses:
+        - $IP/24
+        nameservers:
+          addresses:
+            - $NAMESERVER
+        routes:
+            - to: default
+              via: $GATEWAY
+    version: 2
 EOF
                 netplan apply
             fi
