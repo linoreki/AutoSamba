@@ -101,7 +101,7 @@ EOF
 }
 
 # Leer las opciones
-while getopts "iush" opt; do
+while getopts "iushf" opt; do
     case ${opt} in
         i)
             echo -e "${GREEN}Iniciando configuración...${NC}"
@@ -123,7 +123,7 @@ while getopts "iush" opt; do
                 read -p "Selecciona el número del adaptador de red que deseas configurar: " ADAPTADOR_NUM
                 ADAPTADOR=$(ip -o link show | awk -F': ' "NR==${ADAPTADOR_NUM} {print \$2}")
 
-                read -p "Ingresa tu dirección IP (por ejemplo, 192.168.1.100/24): " IP
+                read -p "Ingresa tu dirección IP (por ejemplo, 192.168.1.100): " IP
                 read -p "Ingresa tu gateway: " GATEWAY
 
                 cat << EOF > /etc/netplan/00-installer-config.yaml
@@ -134,7 +134,7 @@ network:
     $ADAPTADOR:
       dhcp4: no
       addresses:
-        - $IP
+        - [$IP/24]
       gateway4: $GATEWAY
       nameservers:
         addresses: [$NAMESERVER]
