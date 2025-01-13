@@ -58,7 +58,7 @@ sudo ./AutoSamba.sh [opciones]
 ### 1. Instalación del servidor Samba
 
 ```bash
-sudo ./samba_setup.sh -i
+sudo ./AutoSamba.sh -i
 ```
 El script solicitará la siguiente información:
 - Si desea configurar el `netplan` (y/n).
@@ -71,7 +71,7 @@ Tras la instalación, el servidor Samba estará configurado como un Controlador 
 ### 2. Administración de usuarios del Directorio Activo
 
 ```bash
-sudo ./samba_setup.sh -u
+sudo ./AutoSamba.sh -u
 ```
 El script permite:
 1. Crear un usuario.
@@ -84,7 +84,7 @@ Selecciona la opción deseada y sigue las instrucciones interactivas.
 ### 3. Gestión de carpetas compartidas en el AD
 
 ```bash
-sudo ./samba_setup.sh -s
+sudo ./AutoSamba.sh -s
 ```
 El script solicitará:
 - Nombre de la carpeta compartida.
