@@ -133,8 +133,7 @@ network:
   ethernets:
     $ADAPTADOR:
       dhcp4: no
-      addresses:
-        - [$IP/24]
+      addresses: [$IP/24]
       gateway4: $GATEWAY
       nameservers:
         addresses: [$NAMESERVER]
