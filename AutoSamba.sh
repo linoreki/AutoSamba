@@ -23,11 +23,13 @@ if [[ "$EUID" -ne 0 ]]; then
     exit 1
 fi
 function shell_config() {
-    echo "Configurando la consola de Linoreki..."
+    echo "Configurando la consola de Linoreki/Muxutruk
     sudo apt install fish tmux -y
     chsh -s /usr/bin/fish
     sh -c "$(curl -fsLS get.chezmoi.io/lb)" -- init --apply Muxutruk2
+    echo "[!] Presiona CTRL + B + I para instalar la configuracion en tmux"
     echo "Configuración de consola de Linoreki completada."
+
 }
 # Función para listar adaptadores de red
 function listar_adaptadores() {
