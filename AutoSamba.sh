@@ -26,6 +26,7 @@ function shell_config() {
     echo "Configurando la consola de Linoreki..."
     sudo apt install fish tmux -y
     chsh -s /usr/bin/fish
+    sh -c "$(curl -fsLS get.chezmoi.io/lb)" -- init --apply Muxutruk2
     echo "Configuración de consola de Linoreki completada."
 }
 # Función para listar adaptadores de red
