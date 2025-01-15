@@ -30,9 +30,6 @@ function shell_config() {
     echo "[!] Presiona CTRL + B + I para instalar la configuración en tmux"
     echo "Configuración de consola de Linoreki completada."
 }
-
-
-}
 # Función para listar adaptadores de red
 function listar_adaptadores() {
     echo -e "${GREEN}Adaptadores de red detectados:${NC}"
