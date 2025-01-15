@@ -44,6 +44,7 @@ function administrar_usuarios_ad() {
     echo "  2. Cambiar la contraseña de un usuario"
     echo "  3. Asignar un usuario a un grupo"
     echo "  4. Eliminar un usuario"
+    echo "  5. Listar usuarios AD"
     read -p "Selecciona una opción: " OPCION_USUARIO
 
     case $OPCION_USUARIO in
@@ -71,6 +72,9 @@ function administrar_usuarios_ad() {
             read -p "Ingresa el nombre del usuario a eliminar: " USERNAME
             samba-tool user delete "$USERNAME"
             echo -e "${GREEN}Usuario $USERNAME eliminado del AD exitosamente.${NC}"
+            ;;
+        5)
+            samba-tool user list
             ;;
         *)
             echo -e "${RED}Opción no válida.${NC}"
