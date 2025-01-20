@@ -44,7 +44,9 @@ function administrar_usuarios_ad() {
     echo "  2. Cambiar la contraseña de un usuario"
     echo "  3. Asignar un usuario a un grupo"
     echo "  4. Eliminar un usuario"
-    echo "  5. Listar usuarios AD"
+    echo "  5. Listar usuarios y grupos AD"
+    echo "  6. Crear Grupos"
+    echo "  7. eliminar Grupos"
     read -p "Selecciona una opción: " OPCION_USUARIO
 
     case $OPCION_USUARIO in
@@ -63,7 +65,9 @@ function administrar_usuarios_ad() {
             echo -e "${GREEN}Contraseña del usuario $USERNAME actualizada exitosamente.${NC}"
             ;;
         3)
+            samba-tool user list
             read -p "Ingresa el nombre del usuario: " USERNAME
+            samba-tool group list
             read -p "Ingresa el nombre del grupo: " GROUPNAME
             samba-tool group addmembers "$GROUPNAME" "$USERNAME"
             echo -e "${GREEN}Usuario $USERNAME añadido al grupo $GROUPNAME exitosamente.${NC}"
@@ -75,6 +79,17 @@ function administrar_usuarios_ad() {
             ;;
         5)
             samba-tool user list
+            samba-tool group list
+            ;;
+        6)
+            read -p "Ingresa el nombre del grupo que deseas crear: " GROUPNAME
+            samba-tool group create "$GROUPNAME"
+            echo -e  "${GREEN}grupo $GROUPNAME creado exitosamente.${NC}"
+            ;;
+        7)
+            read -p "Ingresa el nombre del grupo a eliminar: " GROUPNAME
+            samba-tool group delete "$GROUPNAME"
+            echo -e "${GREEN}grupo $GROUPNAME eliminado del AD exitosamente.${NC}"
             ;;
         *)
             echo -e "${RED}Opción no válida.${NC}"
@@ -87,10 +102,13 @@ function administrar_carpetas_ad() {
     echo -e "${GREEN}Administración de carpetas compartidas del Directorio Activo...${NC}"
     read -p "Ingresa el nombre de la carpeta compartida: " SHARED_FOLDER
     read -p "Ingresa el directorio absoluto para la carpeta (por ejemplo, /srv/samba/share): " FOLDER_PATH
-    read -p "Ingresa el grupo del AD que tendrá acceso: " GROUPNAME
+    read -p "Ingresa los permisos de la carpeta(por ejemplo, 2770): " PERMISIONS
+    echo -e "Lista de grupos en el AD.${NC}"
+    samba-tool group list
+    read -p "${GREEN}Ingresa el grupo del AD que tendrá acceso: " GROUPNAME
 
     mkdir -p "$FOLDER_PATH"
-    chmod 2770 "$FOLDER_PATH"
+    chmod "$PERMISIONS" "$FOLDER_PATH"
     chgrp "$GROUPNAME" "$FOLDER_PATH"
 
     cat << EOF >> /etc/samba/smb.conf
@@ -99,7 +117,8 @@ function administrar_carpetas_ad() {
    valid users = @$GROUPNAME
    guest ok = no
    writable = yes
-   browsable = yes
+   browsable = no
+   read only = no
 EOF
 
     echo -e "${GREEN}Carpeta compartida $SHARED_FOLDER configurada exitosamente con acceso para el grupo $GROUPNAME.${NC}"
