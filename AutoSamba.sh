@@ -175,7 +175,7 @@ EOF
 
             # Actualizar e instalar paquetes necesarios
             echo "Actualizando los paquetes..."
-            apt-get update && apt-get upgrade -y
+            apt-get update
 
             echo "Configurando la zona horaria..."
             dpkg-reconfigure -f noninteractive tzdata
